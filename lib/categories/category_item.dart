@@ -36,12 +36,9 @@ class CategoryItem extends StatelessWidget {
   }
 
   void selectCategory(BuildContext ctx) {
-    final pageRoute = MaterialPageRoute(
-      builder: (_) {
-        return CategoryMealsScreen(category);
-      },
+    Navigator.of(ctx).pushNamed(
+      '/category-meals',
+      arguments: category,
     );
-
-    Navigator.of(ctx).push(pageRoute);
   }
 }
