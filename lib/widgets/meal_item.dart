@@ -5,11 +5,13 @@ import '../screens/meal_detail_screen.dart';
 
 class MealItem extends StatelessWidget {
   final Meal meal;
-  final Function removeMeal;
+  // final Function removeMeal;
+  final Function favoriteMeal;
 
   MealItem({
     @required this.meal,
-    @required this.removeMeal,
+    // @required this.removeMeal,
+    @required this.favoriteMeal,
   });
 
   @override
@@ -101,7 +103,7 @@ class MealItem extends StatelessWidget {
     )
         .then((result) {
       if (result != null) {
-        this.removeMeal(result);
+        this.favoriteMeal(result);
       }
     });
   }

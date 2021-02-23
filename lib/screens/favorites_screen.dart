@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/widgets/meal_item.dart';
 
-import '../dummy_data.dart';
 import '../widgets/category_item.dart';
 
 class FavoritesScreen extends StatelessWidget {
+  final List<Meal> favoriteMeals;
+  final Function toggleFavorite;
+
+  FavoritesScreen(this.favoriteMeals, this.toggleFavorite);
+
   @override
   Widget build(BuildContext context) {
-    return GridView(
-      padding: const EdgeInsets.all(25),
-      children: DUMMY_CATEGORIES.map((cat) => CategoryItem(cat)).toList(),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-      ),
+    if (favoriteMeals.isEmpty) {
+      return Center(
+        child: Text('You have no favorites yet - start adding some!'),
+      );
+    }
+
+    return ListView.builder(
+      itemCount: favoriteMeals.length,
+      itemBuilder: (ctx, idx) {
+        return MealItem(
+          meal: favoriteMeals[idx],
+          favoriteMeal: (meal) => toggleFavorite(meal),
+        );
+      },
     );
   }
 }

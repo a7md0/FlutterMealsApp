@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> {
     'vegan': false,
   };
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favoriteMeals = [];
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +48,9 @@ class _MyAppState extends State<MyApp> {
             ),
       ),
       routes: {
-        '/': (ctx) => TabsScreen(),
+        '/': (ctx) => TabsScreen(_favoriteMeals, _toggleFavorite),
         CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(_availableMeals),
-        MealDetailScreen.routeName: (ctx) => MealDetailScreen(),
+        MealDetailScreen.routeName: (ctx) => MealDetailScreen(_toggleFavorite, _isMealFavorite),
         FiltersScreen.routeName: (ctx) => FiltersScreen(
               filters: _filters,
               saveFilters: _setFilters,
@@ -79,5 +80,21 @@ class _MyAppState extends State<MyApp> {
         return true;
       }).toList();
     });
+  }
+
+  void _toggleFavorite(Meal meal) {
+    final idx = _favoriteMeals.indexWhere((m) => m.id == meal.id);
+
+    setState(() {
+      if (idx >= 0) {
+        _favoriteMeals.removeAt(idx);
+      } else {
+        _favoriteMeals.add(meal);
+      }
+    });
+  }
+
+  bool _isMealFavorite(Meal meal) {
+    return _favoriteMeals.any((m) => m.id == meal.id);
   }
 }
