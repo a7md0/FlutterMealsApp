@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/screens/filters_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -22,28 +23,42 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          _buildListTile('Meals', Icons.restaurant),
-          _buildListTile('Filters', Icons.settings),
+          _buildListTile(
+            title: 'Meals',
+            iconData: Icons.restaurant,
+            context: context,
+            routeName: '/',
+          ),
+          _buildListTile(
+            title: 'Filters',
+            iconData: Icons.settings,
+            context: context,
+            routeName: FiltersScreen.routeName,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildListTile(String title, IconData iconData) {
+  Widget _buildListTile({
+    @required String title,
+    @required IconData iconData,
+    @required BuildContext context,
+    @required String routeName,
+  }) {
     return ListTile(
-      leading: Icon(
-        iconData,
-        size: 26,
-      ),
-      title: Text(
-        title,
-        style: TextStyle(
-          fontFamily: 'RobotoCondensed',
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
+        leading: Icon(
+          iconData,
+          size: 26,
         ),
-      ),
-      onTap: () {},
-    );
+        title: Text(
+          title,
+          style: TextStyle(
+            fontFamily: 'RobotoCondensed',
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        onTap: () => Navigator.of(context).pushReplacementNamed(routeName));
   }
 }
