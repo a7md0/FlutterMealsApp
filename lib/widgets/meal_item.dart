@@ -5,8 +5,12 @@ import '../screens/meal_detail_screen.dart';
 
 class MealItem extends StatelessWidget {
   final Meal meal;
+  final Function removeMeal;
 
-  MealItem(this.meal);
+  MealItem({
+    @required this.meal,
+    @required this.removeMeal,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +94,16 @@ class MealItem extends StatelessWidget {
   }
 
   void selectMeal(BuildContext context) {
-    Navigator.of(context).pushNamed(MealDetailScreen.routeName, arguments: meal);
+    Navigator.of(context)
+        .pushNamed(
+      MealDetailScreen.routeName,
+      arguments: meal,
+    )
+        .then((result) {
+      if (result != null) {
+        this.removeMeal(result);
+      }
+    });
   }
 
   String get complexityText {
