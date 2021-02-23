@@ -4,18 +4,30 @@ import 'package:meals_app/widgets/main_drawer.dart';
 class FiltersScreen extends StatefulWidget {
   static const routeName = '/filters';
 
+  Map<String, bool> filters;
+  Function saveFilters;
+
+  FiltersScreen({Map<String, bool> filters, Function saveFilters}) {
+    this.filters = Map<String, bool>.from(filters);
+    this.saveFilters = saveFilters;
+  }
+
   @override
   _FiltersScreenState createState() => _FiltersScreenState();
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  bool _glutenFree = false, _lactoseFree = false, _vegetarian = false, _vegan = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Filters'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () => widget.saveFilters(widget.filters),
+          )
+        ],
       ),
       drawer: MainDrawer(),
       body: Column(
@@ -33,40 +45,40 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 _buildSwitchTile(
                   title: 'Gluten-free',
                   subtitle: 'Only include gluten-free meals.',
-                  value: _glutenFree,
+                  value: widget.filters['glutenFree'],
                   onChanged: (newValue) {
                     setState(() {
-                      _glutenFree = newValue;
+                      widget.filters['glutenFree'] = newValue;
                     });
                   },
                 ),
                 _buildSwitchTile(
                   title: 'Lactose-free',
                   subtitle: 'Only include gluten-free meals.',
-                  value: _lactoseFree,
+                  value: widget.filters['lactoseFree'],
                   onChanged: (newValue) {
                     setState(() {
-                      _lactoseFree = newValue;
+                      widget.filters['lactoseFree'] = newValue;
                     });
                   },
                 ),
                 _buildSwitchTile(
                   title: 'Vegetarian',
                   subtitle: 'Only include vegetarian meals.',
-                  value: _vegetarian,
+                  value: widget.filters['vegetarian'],
                   onChanged: (newValue) {
                     setState(() {
-                      _vegetarian = newValue;
+                      widget.filters['vegetarian'] = newValue;
                     });
                   },
                 ),
                 _buildSwitchTile(
                   title: 'Vegan',
                   subtitle: 'Only include vegan meals.',
-                  value: _vegan,
+                  value: widget.filters['vegan'],
                   onChanged: (newValue) {
                     setState(() {
-                      _vegan = newValue;
+                      widget.filters['vegan'] = newValue;
                     });
                   },
                 ),
