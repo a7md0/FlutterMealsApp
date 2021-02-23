@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/widgets/main_drawer.dart';
 
 import './categories_screen.dart';
 import './favorites_screen.dart';
@@ -20,6 +21,9 @@ class _TabsScreenState extends State<TabsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_tabs[_activeTabIdx]['title'] as String),
+      ),
+      drawer: Drawer(
+        child: MainDrawer(),
       ),
       body: _tabs[_activeTabIdx]['page'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
